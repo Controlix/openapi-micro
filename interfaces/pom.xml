@@ -10,8 +10,20 @@
     <artifactId>interfaces</artifactId>
     <properties>
         <kotlin.version>2.0.20</kotlin.version>
-        <jackson.version>2.18.0</jackson.version>
+        <spring-boot.version>3.3.4</spring-boot.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -27,26 +39,26 @@
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
-            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>3.3.4</version>
         </dependency>
         <dependency>
             <groupId>io.kotlintest</groupId>
             <artifactId>kotlintest-runner-junit5</artifactId>
             <version>3.4.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
+        <sourceDirectory>${project.build.directory}/generated-sources/openapi/src/main/kotlin</sourceDirectory>
+        <testSourceDirectory>${project.build.directory}/generated-sources/openapi/src/test/kotlin</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.openapitools</groupId>
@@ -59,7 +71,7 @@
                         </goals>
                         <configuration>
                             <generatorName>kotlin</generatorName>
-                            <inputSpec>${project.basedir}/src/main/resources/pets-api.yml</inputSpec>
+                            <inputSpec>${project.basedir}/src/main/resources/pets-api.yaml</inputSpec>
                             <configOptions>
                                 <library>jvm-spring-restclient</library>
                                 <useSpringBoot3>true</useSpringBoot3>
@@ -73,39 +85,7 @@
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <version>${kotlin.version}</version>
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>test-compile</id>
-                        <goals>
-                            <goal>test-compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>3.6.0</version>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>${project.build.directory}/generated-sources</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
+                <extensions>true</extensions>
             </plugin>
         </plugins>
     </build>
