@@ -21,8 +21,8 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>spring</generatorName>
-                            <inputSpecRootDirectory>${project.basedir}/src/main/resources</inputSpecRootDirectory>
+                            <generatorName>kotlin-spring</generatorName>
+                            <inputSpec>${project.basedir}/src/main/resources/pets-api.yml</inputSpec>
                             <configOptions>
                                 <interfaceOnly>true</interfaceOnly>
                                 <library>spring-cloud</library>
