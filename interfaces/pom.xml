@@ -21,11 +21,12 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <generatorName>kotlin-spring</generatorName>
+                            <generatorName>kotlin</generatorName>
                             <inputSpec>${project.basedir}/src/main/resources/pets-api.yml</inputSpec>
                             <configOptions>
-                                <interfaceOnly>true</interfaceOnly>
-                                <library>spring-cloud</library>
+                                <library>jvm-spring-restclient</library>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <serializationLibrary>jackson</serializationLibrary>
                             </configOptions>
                         </configuration>
                     </execution>
